@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Diary</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/index.js" defer></script>
+    <script src="https://kit.fontawesome.com/2c6c07d186.js" crossorigin="anonymous"></script>
+    <img src="img/lettering-head.png" id="header-image">
+    <style>
+        .content {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            padding: 8px;
+            /* background-color: red; */
+        }
+
+        textarea {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: transparent;
+            color: #000;
+            outline: none;
+            border: none;
+            padding: 8px;
+            resize: none;
+            height: 100%;
+            width: 100%;
+        }
+
+        .line {
+            position: relative;
+            width: 100%;
+            height: 1px;
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Previous Button -->
+    <button id="prev-btn">
+        <i class="fas fa-arrow-circle-left"></i>
+    </button>
+
+
+    <!-- Book -->
+    <div id="book" class="book">
+        <!-- Paper 1 -->
+            
+        <% if (!pages.length) { %>
+            <div class="paper">
+                <div class="front">
+                    <div id="f1" class="front-content">
+                        <div class="content">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <textarea name="last-page" id="last-page"></textarea>
+                        </div>
+                    </div>
+                </div>    
+                <div class="back">
+                    <div id="f1" class="back-content">
+                        <div class="content">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <textarea name="last-page" id="last-page"></textarea>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        <% } %>
+
+        <% pages.forEach((page, index, pages) => { %>
+            <% if (index % 2 === 0) { %>
+                <div class="paper">
+                    <div class="front">
+                        <div id="f1" class="front-content">
+                            <div class="content">
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <textarea name="last-page" id="last-page"></textarea>
+                            </div>
+                        </div>
+                    </div>    
+                <% } else { %>
+                    <div class="back">
+                        <div id="f1" class="back-content">
+                            <div class="content">
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <div class="line"></div>
+                                <textarea name="last-page" id="last-page"></textarea>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+            <% } %>
+        <% }) %>
+
+        <% if (pages.length % 2 !== 0) { %>
+                <div class="back">
+                    <div id="f1" class="back-content">
+                        <div class="content">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <textarea name="last-page" id="last-page"></textarea>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        <% } %>
+    </div>
+
+    <!-- Next Button -->
+    <button id="next-btn">
+        <i class="fas fa-arrow-circle-right"></i>
+    </button>
+    <footer>
+        <button id="save-btn">
+            <i class="fa-regular fa-circle-check"></i>
+        </button>
+        
+        <button id="delete-btn">
+            <i class="fa-solid fa-trash-can"></i>
+        </button>
+    </footer>
+</body>
+</html>
