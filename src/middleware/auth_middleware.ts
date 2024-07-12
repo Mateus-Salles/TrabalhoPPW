@@ -11,13 +11,12 @@ export async function authMiddleware(
   response: Response,
   next: NextFunction
 ) {
-  const token = request.cookies.token || request.headers.authorization?.split(' ')[1];
+  const token =
+    request.cookies.token || request.headers.authorization?.split(" ")[1];
 
   if (!token) {
-    return response.status(401).redirect('/auth/login');
+    return response.status(401).redirect("/auth/login");
   }
-
-  // const [, token] = fullToken.split(" ");
 
   const JWT_SECRET = process.env.JWT_SECRET || "default";
 
@@ -27,12 +26,10 @@ export async function authMiddleware(
 
     if (!user) throw new Error();
 
-    const { password: _, ...rest } = user;
-
-    request.user = rest;
+    request.user = user;
 
     return next();
   } catch (err) {
-    return response.status(401).redirect('/auth/login');
+    return response.status(401).redirect("/auth/login");
   }
 }

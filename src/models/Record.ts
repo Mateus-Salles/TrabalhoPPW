@@ -15,9 +15,9 @@ export class Record extends Model<
 > {
   declare id: CreationOptional<number>;
   declare body: string;
-  declare userId: ForeignKey<User["id"]>;
-  declare createdAt: CreationOptional<Date>;
-  declare updatedAt: CreationOptional<Date>;
+  declare user_id: ForeignKey<User["id"]>;
+  declare created_at: CreationOptional<Date>;
+  declare updated_at: CreationOptional<Date>;
 }
 
 Record.init(
@@ -32,8 +32,12 @@ Record.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
+    user_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    created_at: DataTypes.DATE,
+    updated_at: DataTypes.DATE,
   },
   {
     sequelize: Connection,
@@ -41,21 +45,28 @@ Record.init(
   }
 );
 
-User.hasMany(Record, {
-  sourceKey: "id",
-  foreignKey: "userId",
-  as: "records",
+Record.beforeCreate((record) => {
+  const date = new Date();
+  record.created_at = date;
+  record.updated_at = date;
 });
 
-try {
-  const result = await Connection.query(
-    "SELECT 1 FROM information_schema.tables WHERE table_schema='daily_diary' AND table_name='records'"
-  );
+Record.beforeUpdate((record) => {
+  record.updated_at = new Date();
+});
 
-  if (result[0].length) console.log("The 'records' table already exists");
-  else {
-    await Record.sync();
+
+(async () => {
+  try {
+    const result = await Connection.query(
+      "SELECT 1 FROM information_schema.tables WHERE table_schema='daily_diary' AND table_name='records'"
+    );
+
+    if (result[0].length) console.log("The 'records' table already exists");
+    else {
+      await Record.sync();
+    }
+  } catch (err) {
+    console.error("Error checking/creating table: ", err);
   }
-} catch (err) {
-  console.error("Error checking/creating table: ", err);
-}
+})();

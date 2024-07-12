@@ -1,9 +1,10 @@
 import { Router, Request, Response } from "express";
-import { authMiddleware } from "../middleware/auth_middleware";
 import { RecordsController } from "../controllers/RecordsController";
+import { authMiddleware } from "../middleware/auth_middleware";
 
 const router = Router();
 
-router.get("/home", authMiddleware, RecordsController.index);
+router.post("/", authMiddleware, RecordsController.store);
+router.put("/edit", authMiddleware, RecordsController.update);
 
 export default router;

@@ -9,36 +9,6 @@
     <script src="js/index.js" defer></script>
     <script src="https://kit.fontawesome.com/2c6c07d186.js" crossorigin="anonymous"></script>
     <img src="img/lettering-head.png" id="header-image">
-    <style>
-        .content {
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            padding: 8px;
-            /* background-color: red; */
-        }
-
-        textarea {
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: transparent;
-            color: #000;
-            outline: none;
-            border: none;
-            padding: 8px;
-            resize: none;
-            height: 100%;
-            width: 100%;
-        }
-
-        .line {
-            position: relative;
-            width: 100%;
-            height: 1px;
-            background-color: #000;
-        }
-    </style>
 </head>
 <body>
     <!-- Previous Button -->
@@ -50,151 +20,38 @@
     <!-- Book -->
     <div id="book" class="book">
         <!-- Paper 1 -->
+
+        <div class="paper">
+            <div class="front">
+                <div class="front-content"></div>
+            </div>
+            <div class="back">
+                <div class="back-content">
+                    <%= user.username %>
+                    <button>Account</button>
+                </div>
+            </div>
+        </div>
             
         <% if (!pages.length) { %>
             <div class="paper">
-                <div class="front">
-                    <div id="f1" class="front-content">
-                        <div class="content">
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <textarea name="last-page" id="last-page"></textarea>
-                        </div>
-                    </div>
-                </div>    
-                <div class="back">
-                    <div id="f1" class="back-content">
-                        <div class="content">
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <textarea name="last-page" id="last-page"></textarea>
-                        </div>
-                    </div>
-                </div>    
+                <%- include('components/pages/front', { page: { body: null, id: null } }) %>
+                <%- include('components/pages/back', { page: { body: null, id: null } }) %>
             </div>
         <% } %>
 
         <% pages.forEach((page, index, pages) => { %>
             <% if (index % 2 === 0) { %>
                 <div class="paper">
-                    <div class="front">
-                        <div id="f1" class="front-content">
-                            <div class="content">
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <textarea name="last-page" id="last-page"></textarea>
-                            </div>
-                        </div>
-                    </div>    
-                <% } else { %>
-                    <div class="back">
-                        <div id="f1" class="back-content">
-                            <div class="content">
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <div class="line"></div>
-                                <textarea name="last-page" id="last-page"></textarea>
-                            </div>
-                        </div>
-                    </div>    
+                    <%- include('components/pages/front', { page }) %>
+            <% } else { %>
+                    <%- include('components/pages/back', { page }) %>
                 </div>
             <% } %>
         <% }) %>
 
         <% if (pages.length % 2 !== 0) { %>
-                <div class="back">
-                    <div id="f1" class="back-content">
-                        <div class="content">
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <div class="line"></div>
-                            <textarea name="last-page" id="last-page"></textarea>
-                        </div>
-                    </div>
-                </div>    
+                <%- include('components/pages/back', { page: { body: null, id: null } }) %>
             </div>
         <% } %>
     </div>
