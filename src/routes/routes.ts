@@ -8,10 +8,7 @@ import recordsRoutes from "./records.routes.js";
 
 export const router = Router();
 
-router.get("/", (request: Request, response: Response) =>
-  response.redirect("/auth/register")
-);
-router.get("/home", authMiddleware, RecordsController.index);
+router.get("/", authMiddleware, RecordsController.index);
 
 router.use("/auth", authRoutes);
 router.use("/user", usersRoutes);

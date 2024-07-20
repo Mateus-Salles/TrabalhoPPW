@@ -3,20 +3,26 @@ const prevBtn = document.querySelector("#prev-btn");
 const nextBtn = document.querySelector("#next-btn");
 const saveBtn = document.querySelector("#save-btn");
 const book = document.querySelector("#book");
-
 const papers = document.querySelectorAll(".paper");
+const changeRegister = document.querySelector("#change-register");
+const changeLogin = document.querySelector("#change-login");
 
 // Event Listener
 prevBtn.addEventListener("click", goPrevPage);
 nextBtn.addEventListener("click", goNextPage);
 saveBtn.addEventListener("click", verifyPages);
 
-papers.forEach((element, index, list) => {
-  element.style.zIndex = list.length - index;
+if (changeLogin && changeRegister) {
+  changeRegister.addEventListener("click", goPrevPage);
+  changeLogin.addEventListener("click", goNextPage);
+}
+
+papers.forEach((element, index) => {
+  const zI = index === 0 ? 3 : index === 1 ? 2 : 1;
+  element.style.zIndex = zI;
   const frontPage = element.querySelector(".front .front-content");
   const backPage = element.querySelector(".back .back-content");
   const pages = [frontPage, backPage];
-  console.log(pages);
 
   pages.forEach((item) => {
     const lines = item.querySelectorAll(".line");
@@ -31,6 +37,7 @@ papers.forEach((element, index, list) => {
 
 // Business Logic
 let currentLocation = 1;
+let temp = 0;
 const numOfPapers = papers.length;
 const maxLocation = numOfPapers + 1;
 
@@ -51,20 +58,33 @@ function closeBook(isAtBeginning) {
   nextBtn.style.transform = "translateX(0px)";
 }
 
+function frontEvent(event) {
+  element = event.target.parentElement;
+  element.style.zIndex = 1;
+
+  const prevPaper = papers[temp - 2];
+  const nextPaper = papers[temp];
+  const currentPaper = papers[temp - 1];
+  const nextNextPaper = papers[temp + 1];
+
+  if (prevPaper) prevPaper.style.zIndex = 1;
+  if (currentPaper) currentPaper.style.zIndex = 2;
+  if (nextPaper) nextPaper.style.zIndex = 3;
+  if (nextNextPaper) nextNextPaper.style.zIndex = 2;
+
+  temp = 0;
+}
+
 function goNextPage() {
-  if (currentLocation < maxLocation) {
+  if (currentLocation < maxLocation - 1) {
     const paper = papers[currentLocation - 1];
-    const prevPaper =
-      maxLocation != currentLocation ? papers[currentLocation] : null;
-    const temp = currentLocation - 1;
+    temp += currentLocation;
 
     if (currentLocation === 1) openBook();
 
-    if (prevPaper) prevPaper.style.zIndex = temp;
-    setTimeout(() => (prevPaper.style.zIndex = temp - 1), 400);
+    paper.querySelector(".back").addEventListener("transitionend", frontEvent);
 
     paper.classList.add("flipped");
-    paper.style.zIndex = currentLocation;
 
     if (currentLocation === papers.length) closeBook(false);
 
@@ -73,16 +93,25 @@ function goNextPage() {
 }
 
 function goPrevPage() {
-  let paper;
-
   if (currentLocation > 1) {
-    paper = papers[currentLocation - 2];
+    const nextPaper = papers[currentLocation - 3];
+    const paper = papers[currentLocation - 2];
+    const prevPaper = papers[currentLocation - 1];
+    const prevPrevPaper = papers[currentLocation];
 
     if (currentLocation === 2) closeBook(true);
     else if (currentLocation === maxLocation) openBook();
 
-    paper.style.zIndex = maxLocation - (currentLocation - 1);
+    paper
+      .querySelector(".back")
+      .removeEventListener("transitionend", frontEvent);
+
+    if (prevPrevPaper) prevPrevPaper.style.zIndex = 1;
+    if (prevPaper) prevPaper.style.zIndex = 2;
+    if (nextPaper) nextPaper.style.zIndex = 2;
+
     paper.classList.remove("flipped");
+    paper.style.zIndex = 3;
 
     currentLocation--;
   }

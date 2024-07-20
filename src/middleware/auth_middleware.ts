@@ -15,7 +15,7 @@ export async function authMiddleware(
     request.cookies.token || request.headers.authorization?.split(" ")[1];
 
   if (!token) {
-    return response.status(401).redirect("/auth/login");
+    return response.status(401).render("index", { user: null, pages: null });
   }
 
   const JWT_SECRET = process.env.JWT_SECRET || "default";
@@ -30,6 +30,6 @@ export async function authMiddleware(
 
     return next();
   } catch (err) {
-    return response.status(401).redirect("/auth/login");
+    return response.status(401).render("index", { user: null, pages: null });
   }
 }

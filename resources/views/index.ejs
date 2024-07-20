@@ -12,54 +12,113 @@
 </head>
 <body>
     <!-- Previous Button -->
+    <% if (user) { %>
+
     <button id="prev-btn">
         <i class="fas fa-arrow-circle-left"></i>
     </button>
 
+    <% } else { %>
+
+    <button id="prev-btn" hidden>
+        <i class="fas fa-arrow-circle-left"></i>
+    </button>
+
+    <% } %>
 
     <!-- Book -->
     <div id="book" class="book">
-        <!-- Paper 1 -->
 
-        <div class="paper">
-            <div class="front">
-                <div class="front-content"></div>
-            </div>
-            <div class="back">
-                <div class="back-content">
-                    <%= user.username %>
-                    <button>Account</button>
+        <!-- Paper 1 -->
+        <% if (user) { %>
+
+            <div class="paper">
+                <div class="front">
+                    <div class="front-content"></div>
+                </div>
+                <div class="back">
+                    <div class="back-content">
+                        <%- include('components/account/account', { user }) %>
+                    </div>
                 </div>
             </div>
-        </div>
+
+        <% } else { %>
+
+            <div class="paper">
+                <div class="front">
+                    <div class="front-content">
+                        <%- include('auth/register') %>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="back-content">
+                        <%- include('auth/login') %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paper">
+                <div class="front">
+                    <div class="front-content">
+                        <img src="/img/lettering-head.png" alt="Welcome diary" style="width: 80%; position: fixed; top: 10%;">
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="back-content"></div>
+                </div>
+            </div>
+
+        <% } %>
+
+        <% if (pages) { %>
             
         <% if (!pages.length) { %>
             <div class="paper">
-                <%- include('components/pages/front', { page: { body: null, id: null } }) %>
-                <%- include('components/pages/back', { page: { body: null, id: null } }) %>
+                <%- include('components/paper/front', { page: { body: null, id: null } }) %>
+                <%- include('components/paper/back', { page: { body: null, id: null } }) %>
             </div>
         <% } %>
 
         <% pages.forEach((page, index, pages) => { %>
             <% if (index % 2 === 0) { %>
                 <div class="paper">
-                    <%- include('components/pages/front', { page }) %>
+                    <%- include('components/paper/front', { page }) %>
             <% } else { %>
-                    <%- include('components/pages/back', { page }) %>
+                    <%- include('components/paper/back', { page }) %>
                 </div>
             <% } %>
         <% }) %>
 
         <% if (pages.length % 2 !== 0) { %>
-                <%- include('components/pages/back', { page: { body: null, id: null } }) %>
+                <%- include('components/paper/back', { page: { body: null, id: null } }) %>
             </div>
         <% } %>
+        
+        <div class="paper">
+            <%- include('components/paper/front', { page: { body: null, id: null } }) %>
+            <%- include('components/paper/back', { page: { body: null, id: null } }) %>
+        </div>
+
+        <% } %>
+
     </div>
 
     <!-- Next Button -->
+    <% if (user) { %>
+
     <button id="next-btn">
         <i class="fas fa-arrow-circle-right"></i>
     </button>
+
+    <% } else { %>
+
+    <button id="next-btn" hidden>
+        <i class="fas fa-arrow-circle-right"></i>
+    </button>
+
+    <% } %>
+    
     <footer>
         <button id="save-btn">
             <i class="fa-regular fa-circle-check"></i>

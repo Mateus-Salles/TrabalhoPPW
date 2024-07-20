@@ -6,14 +6,6 @@ import bcrypt from "bcryptjs";
 const JWT_SECRET = process.env.JWT_SECRET || "default";
 
 export class AuthController {
-  static renderRegister(request: Request, response: Response) {
-    return response.render("auth/register");
-  }
-
-  static renderLogin(request: Request, response: Response) {
-    return response.render("auth/login");
-  }
-
   static async login(request: Request, response: Response) {
     const { email, password } = request.body;
 
