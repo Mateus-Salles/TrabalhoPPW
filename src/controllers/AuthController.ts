@@ -28,6 +28,12 @@ export class AuthController {
     return response.redirect("/");
   }
 
+  static async logout(request: Request, response: Response) {
+    response.cookie("token", "", { expires: new Date(0) });
+
+    return response.status(200).send();
+  }
+
   static async register(request: Request, response: Response) {
     const { email, password, username } = request.body;
 

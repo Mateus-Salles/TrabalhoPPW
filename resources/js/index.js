@@ -26,6 +26,12 @@ let numOfPapers = papers.length;
 let maxLocation = numOfPapers + 1;
 let transition = true;
 
+function logout() {
+  fetch("/auth/logout", { method: "POST" })
+    .then(() => (window.location.href = "/"))
+    .catch((err) => console.error(err));
+}
+
 function arrangePapers(paper, index) {
   const zI = index === 0 ? 3 : index === 1 ? 2 : 1;
   paper.style.zIndex = zI;
