@@ -70,29 +70,35 @@
             </div>
 
         <% } %>
-
-        <% if (pages) { %>
+        
+        <% if (!pages) { %>
             
-        <% if (!pages.length) { %>
             <div class="paper">
                 <%- include('components/paper/front', { page: { body: null, id: null } }) %>
                 <%- include('components/paper/back', { page: { body: null, id: null } }) %>
             </div>
-        <% } %>
 
-        <% pages.forEach((page, index, pages) => { %>
+        <% } else { %>
+
+        <% pages.forEach((page, index) => { %>
             <% if (index % 2 === 0) { %>
+
                 <div class="paper">
                     <%- include('components/paper/front', { page }) %>
+
             <% } else { %>
+
                     <%- include('components/paper/back', { page }) %>
                 </div>
+
             <% } %>
         <% }) %>
 
-        <% if (pages.length % 2 !== 0) { %>
+        <% if (pages.length % 2 != 0) { %>
+
                 <%- include('components/paper/back', { page: { body: null, id: null } }) %>
             </div>
+
         <% } %>
         
         <div class="paper">

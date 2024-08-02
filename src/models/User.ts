@@ -17,8 +17,6 @@ export class User extends Model<
   declare username: string;
   declare email: string;
   declare password: string;
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
 }
 
 User.init(
@@ -40,8 +38,6 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE,
   },
   {
     tableName: "users",
@@ -52,25 +48,17 @@ User.init(
 User.beforeCreate(async (user) => {
   const uuid = crypto.randomUUID();
   const salt = await bcrypt.genSalt(10);
-  const date = new Date();
   user.password = await bcrypt.hash(user.password, salt);
   user.id = uuid;
-  user.created_at = date;
-  user.updated_at = date;
 });
 
-User.beforeUpdate(async (user) => {
-  const updated_at = new Date();
-  user.updated_at = updated_at;
-});
-
-Record.belongsTo(User);
+Record.belongsTo(User, { foreignKey: "user_id" });
 
 User.hasMany(Record, {
   sourceKey: "id",
   foreignKey: "user_id",
   as: "records",
-  onDelete: 'CASCADE'
+  onDelete: "CASCADE",
 });
 
 (async () => {

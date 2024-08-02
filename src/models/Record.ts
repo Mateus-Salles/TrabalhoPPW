@@ -16,8 +16,6 @@ export class Record extends Model<
   declare id: CreationOptional<number>;
   declare body: string;
   declare user_id: ForeignKey<User["id"]>;
-  declare created_at: CreationOptional<Date>;
-  declare updated_at: CreationOptional<Date>;
 }
 
 Record.init(
@@ -36,25 +34,12 @@ Record.init(
       type: DataTypes.UUID,
       allowNull: false,
     },
-    created_at: DataTypes.DATE,
-    updated_at: DataTypes.DATE,
   },
   {
     sequelize: Connection,
     tableName: "records",
   }
 );
-
-Record.beforeCreate((record) => {
-  const date = new Date();
-  record.created_at = date;
-  record.updated_at = date;
-});
-
-Record.beforeUpdate((record) => {
-  record.updated_at = new Date();
-});
-
 
 (async () => {
   try {

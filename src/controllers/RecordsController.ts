@@ -9,9 +9,14 @@ interface RecordBody {
 
 export class RecordsController {
   static async index(request: Request, response: Response) {
-    const user = request.user
+    const user = request.user;
     const records = await Record.findAll({ where: { user_id: user.id } });
-    return response.render("index", { pages: records, user });
+
+    const pages = records.map((page) => {
+      return { id: page.id, body: page.body };
+    });
+
+    return response.render("index", { pages, user });
   }
 
   static async store(request: Request, response: Response) {
@@ -38,13 +43,31 @@ export class RecordsController {
 
       if (!id) return response.status(400).send();
 
-      const record = await Record.findByPk(Number(page.id));
+      const record = await Record.findByPk(Number(id));
 
       if (!record) return response.status(400).send();
 
       record.body = page.body;
 
       await record.save();
+    });
+
+    return response.status(204).send();
+  }
+
+  static async delete(request: Request, response: Response) {
+    const pages: RecordBody[] = request.body.pages;
+
+    pages.forEach(async (page) => {
+      const id = page.id;
+
+      if (!id) return response.status(400).send();
+
+      const record = await Record.findByPk(Number(id));
+
+      if (!record) return response.status(400).send();
+
+      await record.destroy();
     });
 
     return response.status(204).send();

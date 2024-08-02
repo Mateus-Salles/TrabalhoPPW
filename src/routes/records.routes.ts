@@ -6,5 +6,6 @@ const router = Router();
 
 router.post("/", authMiddleware, RecordsController.store);
 router.put("/edit", authMiddleware, RecordsController.update);
+router.delete("/delete", authMiddleware, RecordsController.delete);
 
 export default router;
