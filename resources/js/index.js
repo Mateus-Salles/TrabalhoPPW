@@ -26,6 +26,79 @@ let numOfPapers = papers.length;
 let maxLocation = numOfPapers + 1;
 let transition = true;
 
+async function createAccountPage() {
+  const page = papers[0].querySelector(".front .front-content");
+
+  if (!page) return;
+
+  const response = await fetch("/render/self-info");
+
+  if (!response.ok) return;
+
+  const html = await response.text();
+
+  const element = new DOMParser().parseFromString(html, "text/html").body
+    .firstChild;
+
+  if (!element) return;
+
+  page.appendChild(element);
+
+  goPrevPage();
+
+  transition = false;
+}
+
+function returnDiary() {
+  const page = papers[0].querySelector(".front .front-content");
+  const form = page.querySelector("form");
+
+  transition = true;
+
+  goNextPage();
+
+  page.removeChild(form);
+}
+
+function changePassword(button) {
+  const form = button.closest("form");
+  const formData = new FormData(form);
+  const email = formData.get("email");
+
+  fetch("/password/send", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert("Foi enviado um email com o link de confirmação");
+      }
+    })
+    .catch((err) => console.error(err));
+}
+
+function changeUsername(form, event) {
+  event.preventDefault();
+
+  const formData = new FormData(form);
+  const username = formData.get("username");
+
+  if (!username) return;
+
+  fetch("/user/edit", {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username }),
+  })
+    .then(() => (window.location.href = "/"))
+    .catch((err) => console.error(err));
+}
+
 function logout() {
   fetch("/auth/logout", { method: "POST" })
     .then(() => (window.location.href = "/"))
@@ -60,7 +133,7 @@ function addPageLines(page) {
 }
 
 async function getFrontPage() {
-  const response = await fetch("/pages?side=front");
+  const response = await fetch("/render/pages?side=front");
 
   if (response.ok) {
     const frontPage = await response.text();
@@ -70,7 +143,7 @@ async function getFrontPage() {
 }
 
 async function getBackPage() {
-  const response = await fetch("/pages?side=back");
+  const response = await fetch("/render/pages?side=back");
 
   if (response.ok) {
     const backPage = await response.text();
@@ -87,8 +160,6 @@ function addNewPaper(event) {
       .then((response) => {
         const frontPage = response[0];
         const backPage = response[1];
-
-        console.log({ frontPage, backPage });
 
         const paper = document.createElement("div");
         paper.classList.add("paper");

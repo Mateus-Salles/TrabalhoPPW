@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 app.set("view engine", "ejs");
 app.set("views", "./resources/views");
 app.use(express.static("resources"));
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(router);

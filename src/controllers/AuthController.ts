@@ -18,7 +18,7 @@ export class AuthController {
     const match = await bcrypt.compare(password, user.password);
 
     if (!match) {
-      return response.status(401).redirect("/auth/login");
+      return response.status(401).redirect("/");
     }
 
     const payload = user.id;

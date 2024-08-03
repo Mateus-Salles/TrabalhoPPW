@@ -1,0 +1,9 @@
+<form onsubmit="changeUsername(this, event)">
+  <div>
+    <input type="text" name="username" value="<%= user.username %>">
+    <button type="submit">Alterar nome</button>
+    <input type="email" name="email" value="<%= user.email %>" readonly>
+    <button type="button" onclick="changePassword(this)">Alterar senha</button>
+    <button type="button" onclick="returnDiary()" style="color: white; background-color: #2e2e2e; padding: 4px;">Voltar</button>
+  </div>
+</form>
