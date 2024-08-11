@@ -1,8 +1,93 @@
-<div style="width: 100%; height: 100%; padding-right: 12px; padding-left: 12px; padding-top: 24px; padding-bottom: 24px;">
-    <img style="width: 100%; margin-top: 30px; margin-bottom: 30px;" src="img/lettering-head.png" alt="Welcome to Your Diary!">
-    <div style="display: flex; flex-direction: column;">
-        <span style="text-align: center;"><%= user.username %></span>
-        <button onclick="logout()">Logout</button>
-        <button onclick="createAccountPage()">Account</button>
+<style>
+  :root {
+    --grafite-900: #2e2e2e;
+    --grafite-800: #4c4c4c;
+    --grafite-700: #6d6d6d;
+    --grafite-600: #8f8f8f;
+  }
+
+  .btn {
+    padding: 4px;
+    border: 1px solid #2e2e2e;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #2e2e2e;
+  }
+
+  .account {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* gap: 40px; */
+    width: 100%;
+    height: 100%;
+    padding: 50px 12px;
+  }
+
+  .account img {
+    align-self: center;
+    width: 90%;
+  }
+
+  .account .account-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0;
+  }
+
+  .account span {
+    font-size: 24px;
+    font-weight: 400;
+    text-align: center;
+    color: #242424;
+  }
+
+  .account #introduction {
+    position: relative;
+    align-self: center;
+    color: var(--grafite-900);
+    border: 1px solid rgba(109, 109, 109, 0.5);
+    border-radius: 8px;
+    height: 122px;
+    font-size: 18px;
+    resize: none;
+    padding: 2px;
+    width: calc(100% - 16px);
+  }
+
+  .account .btn-logout {
+    color: #fff;
+    background-color: #2e2e2e;
+  }
+</style>
+
+<div class="account">
+  <img src="img/lettering-head.png" alt="Welcome to Your Diary!" />
+  <span><%= user.username %></span>
+  <div class="account-content">
+    <textarea
+      name="introduction"
+      id="introduction"
+      maxlength="140"
+      spellcheck="false"
+      placeholder="Introdução..."
+    ></textarea>
+    <div style="display: flex; justify-content: space-evenly">
+      <button class="btn" onclick="logout()">Logout</button>
+      <button class="btn" onclick="createAccountPage()">Settings</button>
     </div>
+  </div>
 </div>
+<script>
+  const textarea = document.getElementById('introduction');
+
+  textarea.addEventListener('keydown', (event) => {
+    if (event.code == 'Enter') {
+      event.preventDefault()
+    }
+  })
+</script>

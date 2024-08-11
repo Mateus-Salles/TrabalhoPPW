@@ -6,9 +6,7 @@ import {
   DataTypes,
 } from "sequelize";
 import { Connection } from "../database/connection.js";
-import { Record } from "./Record.js";
 import bcrypt from "bcryptjs";
-import { ResetPassword } from "./ResetPassword.js";
 
 export class User extends Model<
   InferAttributes<User>,
@@ -51,24 +49,6 @@ User.beforeCreate(async (user) => {
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   user.id = uuid;
-});
-
-ResetPassword.belongsTo(User, { foreignKey: "user_id" });
-
-User.hasMany(ResetPassword, {
-  sourceKey: "id",
-  foreignKey: "user_id",
-  as: "reset_password",
-  onDelete: "CASCADE",
-});
-
-Record.belongsTo(User, { foreignKey: "user_id" });
-
-User.hasMany(Record, {
-  sourceKey: "id",
-  foreignKey: "user_id",
-  as: "records",
-  onDelete: "CASCADE",
 });
 
 (async () => {

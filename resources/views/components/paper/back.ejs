@@ -1,26 +1,7 @@
 <div class="back">
     <div id="f1" class="back-content">
         <div class="content">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-            <textarea class="body" name="body" id="<%= page.id || null %>"><%= page.body || null %></textarea>
+            <textarea spellcheck="false" class="body records" oninput="inputRecord(this)" name="body" id="<%= page.id || null %>"><%= page.body || null %></textarea>
         </div>
     </div>
-</div>    
+</div>

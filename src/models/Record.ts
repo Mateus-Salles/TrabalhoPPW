@@ -41,6 +41,8 @@ Record.init(
   }
 );
 
+Record.belongsTo(User, { foreignKey: "user_id", onDelete: "CASCADE" });
+
 (async () => {
   try {
     const result = await Connection.query(

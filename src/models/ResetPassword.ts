@@ -40,9 +40,11 @@ ResetPassword.init(
   },
   {
     sequelize: Connection,
-    tableName: "reset_password",
+    tableName: "password_resets",
   }
 );
+
+ResetPassword.belongsTo(User, { foreignKey: "user_id", onDelete: "CASCADE" });
 
 ResetPassword.beforeCreate((resetPass: ResetPassword) => {
   resetPass.expires_in = new Date(Date.now() + 60 * 60 * 1000);

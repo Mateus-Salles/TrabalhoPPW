@@ -25,6 +25,41 @@ let temp = 0;
 let numOfPapers = papers.length;
 let maxLocation = numOfPapers + 1;
 let transition = true;
+const MAX_LINES = 20;
+const MAX_CHARACTERS = 34;
+
+function validateText(text) {
+  const lines = text.split("\n");
+
+  if (lines.length > MAX_LINES) {
+    lines.splice(MAX_LINES);
+    text = lines.join("\n");
+  }
+
+  const linesAdjusted = lines.map((line) => {
+    if (line.length > MAX_CHARACTERS) {
+      let parts = [];
+      while (line.length > MAX_CHARACTERS) {
+        parts.push(line.slice(0, MAX_CHARACTERS));
+        line = line.slice(MAX_CHARACTERS);
+      }
+      parts.push(line);
+      return parts.join("\n");
+    }
+    return line;
+  });
+
+  text = linesAdjusted.join("\n");
+
+  return text;
+}
+
+function inputRecord(textarea) {
+  let text = textarea.value;
+  text = validateText(text);
+
+  textarea.value = text;
+}
 
 async function createAccountPage() {
   const page = papers[0].querySelector(".front .front-content");
@@ -50,12 +85,18 @@ async function createAccountPage() {
 }
 
 function returnDiary() {
-  const page = papers[0].querySelector(".front .front-content");
-  const form = page.querySelector("form");
+  papers[0]
+    .querySelector(".front")
+    .addEventListener("transitionend", configTransitionEnd, { once: true });
 
   transition = true;
 
   goNextPage();
+}
+
+function configTransitionEnd(event) {
+  const page = event.target.querySelector(".front-content");
+  const form = page.querySelector("form");
 
   page.removeChild(form);
 }
@@ -119,16 +160,6 @@ function arrangePapers(paper, index) {
         textarea.addEventListener("change", addNewPaper);
       }
     }
-
-    addPageLines(item);
-  });
-}
-
-function addPageLines(page) {
-  const lines = page.querySelectorAll(".line");
-
-  lines.forEach((value, key) => {
-    value.style.top = `${(484 / (lines.length + 1) / 484) * 100 * (key + 1)}%`;
   });
 }
 
@@ -179,9 +210,6 @@ function addNewPaper(event) {
           return;
         }
 
-        addPageLines(front);
-        addPageLines(back);
-
         paper.appendChild(front);
         paper.appendChild(back);
 
@@ -224,8 +252,6 @@ function frontEvent(event) {
   element = event.target.parentElement;
   element.style.zIndex = 1;
 
-  console.log(temp);
-
   const prevPaper = papers[temp - 2];
   const nextPaper = papers[temp];
   const currentPaper = papers[temp - 1];
@@ -235,8 +261,6 @@ function frontEvent(event) {
   if (currentPaper) currentPaper.style.zIndex = 2;
   if (nextPaper) nextPaper.style.zIndex = 3;
   if (nextNextPaper) nextNextPaper.style.zIndex = 2;
-
-  console.log(papers[0].style.zIndex);
 
   temp = 0;
 

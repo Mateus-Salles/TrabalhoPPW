@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
 import { User } from "../models/User";
 import { ResetPassword } from "../models/ResetPassword";
+import { Op } from "sequelize";
+import { fileURLToPath } from "node:url";
 import mail from "../mail/Mail";
 import crypto from "node:crypto";
 import bcrypt from "bcryptjs";
-import { Op } from "sequelize";
+import ejs from "ejs";
+import path from "node:path";
 
 export class ResetPasswordController {
   static async render(request: Request, response: Response) {
@@ -33,7 +36,7 @@ export class ResetPasswordController {
 
     if (!user) return response.status(400).send();
 
-    const hash = crypto.randomBytes(8).toString("hex");
+    const hash = crypto.randomBytes(20).toString("hex");
 
     const data = {
       user_id: user.id,
@@ -42,12 +45,31 @@ export class ResetPasswordController {
 
     const { token } = await ResetPassword.create(data);
 
+    const username = user.username;
+    const link = `http://localhost:3333/password/verify?token=${token}`;
+
+    const filePath = path.join(
+      fileURLToPath(import.meta.url),
+      "..",
+      "..",
+      "..",
+      "resources",
+      "views",
+      "mail",
+      "reset-password.ejs"
+    );
+
+    const html = await ejs.renderFile(filePath, {
+      username,
+      link,
+    });
+
     mail.sendMail(
       {
         from: "mateussallesmelo@gmail.com",
         to: email,
         subject: "Recuperação de senha",
-        html: `<a href="http://localhost:3333/password/verify?token=${token}">Link</a>`,
+        html,
       },
       (err) => {
         if (err) {
@@ -82,8 +104,8 @@ export class ResetPasswordController {
 
     if (!token) return response.status(401).redirect("/");
 
-    const salt = await bcrypt.genSalt(10)
-    const hash = await bcrypt.hash(password, salt)
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
 
     user.password = hash;
 
