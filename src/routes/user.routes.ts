@@ -6,5 +6,6 @@ const router = Router();
 
 router.get("/", authMiddleware, UsersController.getUser);
 router.patch("/edit", authMiddleware, UsersController.update);
+router.patch("/info", authMiddleware, UsersController.changeInfo);
 
 export default router;

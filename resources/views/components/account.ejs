@@ -67,7 +67,7 @@
 
 <div class="account">
   <img src="img/lettering-head.png" alt="Welcome to Your Diary!" />
-  <span><%= user.username %></span>
+  <span id="username"><%= user.username %></span>
   <div class="account-content">
     <textarea
       name="introduction"
@@ -83,11 +83,21 @@
   </div>
 </div>
 <script>
-  const textarea = document.getElementById('introduction');
+  const textarea = document.getElementById("introduction");
 
-  textarea.addEventListener('keydown', (event) => {
-    if (event.code == 'Enter') {
-      event.preventDefault()
+  textarea.addEventListener("keydown", (event) => {
+    if (event.code == "Enter") {
+      event.preventDefault();
     }
-  })
+  });
+
+  textarea.addEventListener("focusout", async (event) => {
+    fetch("/user/info", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ info: textarea.value }),
+    }).then();
+  });
 </script>
