@@ -5,7 +5,7 @@ import { Connection } from "./database/connection.js";
 import { router } from "./routes/routes.js";
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3333;
 
 app.set("view engine", "ejs");
 app.set("views", "./resources/views");

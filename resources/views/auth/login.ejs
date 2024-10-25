@@ -1,59 +1,76 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Login</title>
-    <meta name="description" content="Login - Register Template">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="/css/auth.css">
-</head>
+    <meta name="description" content="Login - Register Template" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/auth.css" />
+  </head>
 
-<body>
-    <div id="container-login">
-        <div id="title">
-            <i class="material-icons lock">lock</i> Login
+  <body>
+    <div id="container-login" class="auth-container">
+      <div id="title"><i class="material-icons lock">lock</i> Login</div>
+
+      <form action="/auth/login" method="post">
+        <div class="input">
+          <div class="input-addon">
+            <i class="material-icons">face</i>
+          </div>
+          <input
+            id="username"
+            name="email"
+            placeholder="E-mail"
+            type="text"
+            required
+            class="validate"
+            autocomplete="off"
+          />
         </div>
 
-        <form action="/auth/login" method="post">
-            <div class="input">
-                <div class="input-addon">
-                    <i class="material-icons">face</i>
-                </div>
-                <input id="username" name="email" placeholder="Usuário" type="text" required class="validate" autocomplete="off">
-            </div>
+        <div class="clearfix"></div>
 
-            <div class="clearfix"></div>
-
-            <div class="input">
-                <div class="input-addon">
-                    <i class="material-icons">vpn_key</i>
-                </div>
-                <input id="password" name="password" placeholder="Senha" type="password" required class="validate" autocomplete="off">
-            </div>
-
-            <div class="remember-me">
-                <input type="checkbox">
-                <span style="color: #DDD">Lembre Me</span>
-            </div>
-
-            <input type="submit" value="Login" />
-        </form>
-
-        <div class="forgot-password">
-            <a href="#">Esqueceu a sua senha?</a>
-        </div>
-        <div class="privacy">
-            <a href="#">Política de Privacidade</a>
+        <div class="input">
+          <div class="input-addon">
+            <i class="material-icons">vpn_key</i>
+          </div>
+          <input
+            id="password"
+            name="password"
+            placeholder="Senha"
+            type="password"
+            required
+            class="validate"
+            autocomplete="off"
+          />
         </div>
 
-        <div class="register">
+        <div class="remember-me">
+          <input type="checkbox" />
+          <span style="color: #ddd">Lembre Me</span>
+        </div>
+
+        <input type="submit" value="Login" />
+      </form>
+
+      <div class="forgot-password">
+        <a href="#">Esqueceu a sua senha?</a>
+      </div>
+      <div class="privacy">
+        <a href="#">Política de Privacidade</a>
+      </div>
+
+      <div class="register">
         Ainda não tem uma conta?
-            <!-- <a href="/auth/register"><button id="register-link">Registre-se aqui</button></a> -->
-            <button id="change-register" class="register-link">Registre-se aqui</button>
-        </div>
+        <!-- <a href="/auth/register"><button id="register-link">Registre-se aqui</button></a> -->
+        <button id="change-register" class="register-link">
+          Registre-se aqui
+        </button>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>

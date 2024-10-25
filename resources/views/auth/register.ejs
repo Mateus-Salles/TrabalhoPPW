@@ -1,67 +1,90 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Registre-se</title>
-    <meta name="description" content="Login - Register Template">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <meta name="viewport" content="height=device-height, initial-scale=1.0"> -->
-    <link rel="stylesheet" href="/css/auth.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
+    <meta name="description" content="Login - Register Template" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="height=device-height, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/auth.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
-    <div id="container-register">
-        <div id="title">
-            <i class="material-icons lock">lock</i> Registre-se
+  <body>
+    <div id="container-register" class="auth-container">
+      <div id="title"><i class="material-icons lock">lock</i> Registre-se</div>
+
+      <form action="/auth/register" method="post">
+        <div class="input">
+          <div class="input-addon">
+            <i class="material-icons">email</i>
+          </div>
+          <input
+            id="email"
+            name="email"
+            placeholder="Email"
+            type="email"
+            required
+            class="validate"
+            autocomplete="off"
+          />
         </div>
 
-        <form action="/auth/register" method="post">
-            <div class="input">
-                <div class="input-addon">
-                    <i class="material-icons">email</i>
-                </div>
-                <input id="email" name="email" placeholder="Email" type="email" required class="validate" autocomplete="off">
-            </div>
+        <div class="clearfix"></div>
 
-            <div class="clearfix"></div>
-
-            <div class="input">
-                <div class="input-addon">
-                    <i class="material-icons">face</i>
-                </div>
-                <input id="username" name="username" placeholder="Usuário" type="text" required class="validate" autocomplete="off">
-            </div>
-
-            <div class="clearfix"></div>
-
-            <div class="input">
-                <div class="input-addon">
-                    <i class="material-icons">vpn_key</i>
-                </div>
-                <input id="password" name="password" placeholder="Senha" type="password" required class="validate" autocomplete="off">
-            </div>
-
-            <div class="remember-me">
-                <input type="checkbox">
-                <span style="color: #DDD">Eu aceito os Termos de Serviço</span>
-            </div>
-
-            <input type="submit" value="Registre-se" />
-        </form>
-
-        <div class="privacy">
-            <a href="#">Política de Privacidade</a>
+        <div class="input">
+          <div class="input-addon">
+            <i class="material-icons">face</i>
+          </div>
+          <input
+            id="username"
+            name="username"
+            placeholder="Usuário"
+            type="text"
+            required
+            class="validate"
+            autocomplete="off"
+          />
         </div>
 
-        <div class="register">
+        <div class="clearfix"></div>
+
+        <div class="input">
+          <div class="input-addon">
+            <i class="material-icons">vpn_key</i>
+          </div>
+          <input
+            id="password"
+            name="password"
+            placeholder="Senha"
+            type="password"
+            required
+            class="validate"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="remember-me">
+          <input type="checkbox" />
+          <span style="color: #ddd">Eu aceito os Termos de Serviço</span>
+        </div>
+
+        <input type="submit" value="Registre-se" />
+      </form>
+
+      <div class="privacy">
+        <a href="#">Política de Privacidade</a>
+      </div>
+
+      <div class="register">
         Já tem uma conta?
-            <!-- <a href="/auth/login"><button id="register-link">Faça Login aqui</button></a>
+        <!-- <a href="/auth/login"><button id="register-link">Faça Login aqui</button></a>
             -->
-            <button id="change-login" class="register-link">Faça Login aqui</button>
-        </div>
+        <button id="change-login" class="register-link">Faça Login aqui</button>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>
